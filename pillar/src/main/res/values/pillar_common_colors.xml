@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--Shadows color. Transparency base on percentage: ie shadow 13: ~13% transparency-->
+    <color name="pcc_shadow_85">#D9000000</color>
+    <color name="pcc_shadow_73">#6A000000</color>
+    <color name="pcc_shadow_55">#8C000000</color>
+    <color name="pcc_shadow_37">#5E000000</color>
+    <color name="pcc_shadow_32">#52000000</color>
+    <color name="pcc_shadow_25">#40000000</color>
+    <color name="pcc_shadow_13">#21000000</color>
+    <color name="pcc_shadow_05">#0C000000</color>
+
+    <!-- highlight colors -->
+    <color name="pcc_highlight_25">#40FFFFFF</color>
+    <color name="pcc_highlight_13">#21FFFFFF</color>
+    <color name="pcc_highlight_05">#0CFFFFFF</color>
+</resources>

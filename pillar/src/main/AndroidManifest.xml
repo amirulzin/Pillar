@@ -1,0 +1,11 @@
+<manifest
+    package="com.baseconfig.pillar"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <library
+        android:name="Pillar"
+        android:label="Pillar">
+
+    </library>
+
+</manifest>

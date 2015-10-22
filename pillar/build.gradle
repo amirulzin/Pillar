@@ -1,0 +1,132 @@
+apply plugin: 'com.android.library'
+apply plugin: 'com.github.dcendents.android-maven'
+apply plugin: 'com.jfrog.bintray'
+
+//Publishing specific
+def libVersion = '0.1.0'
+def publishedGroup = 'com.baseconfig'
+def artifactName = 'pillar'
+
+version = libVersion
+group = publishedGroup
+
+ext {
+    bintrayRepo = 'maven'
+    libraryName = 'Pillar'
+
+
+    libraryDescription = 'Barebone UI library implementing Material Design for Android'
+
+    siteUrl = 'https://github.com/amirulzin/Pillar'
+    gitUrl = 'https://github.com/amirulzin/Pillar.git'
+
+    developerId = 'amirulzin'
+    developerName = 'Amirul Zin'
+    developerEmail = 'amirul.mdzin@gmail.com'
+
+    licenseName = 'The Apache Software License, Version 2.0'
+    licenseUrl = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+    allLicenses = ["Apache-2.0"]
+
+    artifact = artifactName
+}
+
+android {
+    compileSdkVersion 23
+    buildToolsVersion "23.0.1"
+
+    defaultConfig {
+        minSdkVersion 11
+        targetSdkVersion 23
+        versionCode 1
+        versionName version
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    testCompile 'junit:junit:4.12'
+    compile 'com.android.support:support-annotations:23.1.0'
+    compile 'com.android.support:appcompat-v7:23.1.0'
+    compile 'com.android.support:design:23.1.0'
+    compile 'com.android.support:recyclerview-v7:23.1.0'
+}
+
+//Publishing
+install {
+    repositories.mavenInstaller {
+        pom.project {
+            name = libraryName
+            description = libraryDescription
+            url = siteUrl
+            packaging 'aar'
+            groupId = publishedGroup
+            artifactId = artifact
+            version = libVersion
+            licenses {
+                license {
+                    name = licenseName
+                    url = licenseUrl
+                    distribution 'repo'
+                }
+            }
+            scm {
+                connection = gitUrl
+                url = siteUrl
+            }
+            developers {
+                developer {
+                    name = developerName
+                }
+            }
+        }
+    }
+}
+
+bintray {
+    user = project.hasProperty('bintrayUser') ? project.property('bintrayUser') : System.getenv('BINTRAY_USER')
+    key = project.hasProperty('bintrayApiKey') ? project.property('bintrayApiKey') : System.getenv('BINTRAY_API_KEY')
+    configurations = ['archives']
+    pkg {
+        publish = true //set to false if not publishing
+        repo = bintrayRepo
+        name = artifactName
+        desc = libraryDescription
+        userOrg = user
+        licenses = allLicenses
+        vcsUrl = gitUrl
+        version {
+            name = libVersion
+            desc = libraryDescription
+        }
+    }
+}
+
+task sourcesJar(type: Jar) {
+    from android.sourceSets.main.java.srcDirs
+    classifier = 'sources'
+}
+
+task javadoc(type: Javadoc) {
+    source = android.sourceSets.main.java.srcDirs
+    classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
+}
+
+task javadocJar(type: Jar, dependsOn: javadoc) {
+    classifier = 'javadoc'
+    from javadoc.destinationDir
+}
+artifacts {
+    archives javadocJar
+    archives sourcesJar
+}
+
+task findConventions << {
+    println project.getConvention()
+}
