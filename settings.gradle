@@ -1,1 +1,1 @@
-include ':pillar', ':pillardemo'
+include ':pillar'
