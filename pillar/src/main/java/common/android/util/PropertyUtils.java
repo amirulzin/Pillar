@@ -1,5 +1,7 @@
 package common.android.util;
 
+import android.annotation.TargetApi;
+import android.os.Build;
 import android.util.Property;
 
 import java.lang.reflect.Field;
@@ -8,6 +10,7 @@ import java.util.Map;
 
 public class PropertyUtils {
 
+    @TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH)
     public static <T, R> Map<String, Property<T, R>> getPropertiesMap(Class<T> objectClass, Class<R> propertyClass) {
 
         // Reflection
