@@ -30,13 +30,13 @@ public class StringUtils {
 
     /**
      * This function will take an URL as input and return the file name. <p>Examples : <ul>
-     * <li>http://example.com/a/b/c/test.txt -> test.txt <li>http://example.com/ -> an empty string
-     * <li>http://example.com/test.txt?param=value -> test.txt <li>http://example.com/test.txt#anchor
-     * -> test.txt </ul>
+     * <li>http://example.com/a/b/c/test.txt = test.txt <li>http://example.com/ = an empty string
+     * <li>http://example.com/test.txt?param=value = test.txt <li>http://example.com/test.txt#anchor
+     * = test.txt </ul>
      *
      * @param url The input URL
      * @return The URL file name
-     * @see <a href="http://stackoverflow.com/a/26810644">StackOverflow Answer</a>
+     * See <a href="http://stackoverflow.com/a/26810644">StackOverflow Answer</a>
      */
     public static String getFileNameFromUrl(URL url) {
 
