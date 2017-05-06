@@ -33,6 +33,9 @@ ext {
 android {
     compileSdkVersion 25
     buildToolsVersion "25.0.3"
+    dataBinding {
+        enabled = true
+    }
     defaultConfig {
         minSdkVersion 11
         targetSdkVersion 25
