@@ -5,7 +5,7 @@ import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewTreeObserver;
 
-public class ResourceUtils {
+public class ContextUtils {
 
     public static int getPixels(final Context context, float dp) {
         return Math.round(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, context.getResources()
