@@ -1,4 +1,4 @@
-package com.baseconfig.pillar.drawertype.base;
+package com.baseconfig.pillar.drawer.base;
 
 import android.content.Context;
 import android.os.Build;
