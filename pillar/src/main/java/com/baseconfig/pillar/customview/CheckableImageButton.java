@@ -1,4 +1,4 @@
-package common.android.external;
+package com.baseconfig.pillar.customview;
 /*
  * The MIT License (MIT)
  *
@@ -24,9 +24,9 @@ package common.android.external;
  */
 
 import android.content.Context;
+import android.support.v7.widget.AppCompatImageButton;
 import android.util.AttributeSet;
 import android.widget.Checkable;
-import android.widget.ImageButton;
 
 /**
  * A simple checkable button that has all of the properties that comes with a Button but has
@@ -35,7 +35,7 @@ import android.widget.ImageButton;
  *
  * @see <a href="https://gist.github.com/alexfu/3116b882d9d889e61740">Github Gist</a>
  */
-public class CheckableImageButton extends ImageButton implements Checkable {
+public class CheckableImageButton extends AppCompatImageButton implements Checkable {
 
     private static final int[] CHECKED_STATE_SET = {android.R.attr.state_checked};
     private boolean mChecked;
