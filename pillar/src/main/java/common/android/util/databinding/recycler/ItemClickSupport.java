@@ -1,4 +1,4 @@
-package common.android.util.databinding;
+package common.android.util.databinding.recycler;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -7,7 +7,8 @@ import com.baseconfig.pillar.R;
 
 
 /**
- * As provided by <a href="http://www.littlerobots.nl/blog/Handle-Android-RecyclerView-Clicks/">LittleRobots</a>
+ * As provided by <a href="http://www.littlerobots.nl/blog/Handle-Android-RecyclerView-Clicks/">LittleRobots</a>.
+ * Simple item click listener for RecyclerView.
  */
 public class ItemClickSupport {
     private final RecyclerView mRecyclerView;
