@@ -1,4 +1,4 @@
-package common.android.util.databinding.recycler;
+package com.baseconfig.pillar.databinding.recycler;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.View;

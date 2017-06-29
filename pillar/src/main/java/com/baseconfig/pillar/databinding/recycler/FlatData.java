@@ -1,4 +1,4 @@
-package common.android.util.databinding.recycler;
+package com.baseconfig.pillar.databinding.recycler;
 
 import java.util.ArrayList;
 import java.util.List;

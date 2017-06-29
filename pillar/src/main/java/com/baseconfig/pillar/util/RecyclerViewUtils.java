@@ -1,4 +1,4 @@
-package common.android.util;
+package com.baseconfig.pillar.util;
 
 import android.graphics.Rect;
 import android.support.v7.widget.RecyclerView;

@@ -1,4 +1,4 @@
-package common.android.util;
+package com.baseconfig.pillar.util;
 
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;

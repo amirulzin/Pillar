@@ -1,4 +1,4 @@
-package common.android.util;
+package com.baseconfig.pillar.util;
 
 import android.content.Context;
 import android.net.ConnectivityManager;

@@ -1,4 +1,4 @@
-package common.android.util;
+package com.baseconfig.pillar.util;
 
 import android.annotation.TargetApi;
 import android.os.Build;
