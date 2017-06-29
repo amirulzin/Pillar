@@ -66,9 +66,9 @@ public abstract class NestedScrollHomeBaseActivity extends BaseDrawerActivity {
     private void applySpecialOverlay() {
         final Drawable drawable;
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP_MR1) {
-            drawable = getResources().getDrawable(R.drawable.pillar_gradient_shadow_top);
+            drawable = getResources().getDrawable(R.drawable.pillar_horizontal_shadow_top);
         } else
-            drawable = getResources().getDrawable(R.drawable.pillar_gradient_shadow_top, getTheme());
+            drawable = getResources().getDrawable(R.drawable.pillar_horizontal_shadow_top, getTheme());
 
         getCollapsingToolbarLayout().setForeground(drawable);
     }
