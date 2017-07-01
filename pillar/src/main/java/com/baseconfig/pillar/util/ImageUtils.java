@@ -37,9 +37,8 @@ public class ImageUtils {
     /**
      * A static helper for getting Image path. Under *.Ext as per external code (Apache Licensed)
      *
-     * @see <a href=https://github.com/AKiniyalocts/imgur-android/blob/master/app/src/main/java/akiniyalocts/imgurapiexample/helpers/DocumentHelper.java>Github
-     * link 1</a> and
-     * @see <a href=https://github.com/Krayzk9s/imgur-holo/blob/master/ImgurHolo/src/main/java/com/krayzk9s/imgurholo/tools/FileUtils.java>Github
+     * @see <a href="https://github.com/AKiniyalocts/imgur-android/blob/master/app/src/main/java/akiniyalocts/imgurapiexample/helpers/DocumentHelper.java">Github link 1</a> and
+     * @see <a href="https://github.com/Krayzk9s/imgur-holo/blob/master/ImgurHolo/src/main/java/com/krayzk9s/imgurholo/tools/FileUtils.java">Github
      * link 2</a>
      */
     public static class Ext {
