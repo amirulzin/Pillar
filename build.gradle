@@ -5,7 +5,9 @@ buildscript {
     dependencies {
         classpath 'com.android.tools.build:gradle:2.3.3'
         //For publishing
-        classpath 'com.github.dcendents:android-maven-gradle-plugin:1.5'
+//        classpath 'com.github.dcendents:android-maven-gradle-plugin:1.5'
+
+//        classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.7.3'
         classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.7.3'
     }
 }
@@ -17,8 +19,18 @@ allprojects {
             url "https://maven.google.com"
         }
     }
-}
+// BEGIN GRADLE FURY #2
+    project.group = (project.hasProperty('pom.groupId')
+            ? project.property('pom.groupId') : "")
 
-task clean(type: Delete) {
-    delete rootProject.buildDir
+    project.version =
+            (project.hasProperty('pom.version') ? project.property('pom.version') : "1.0")
+
+//    apply from: 'https://raw.githubusercontent.com/gradle-fury/gradle-fury/master/gradle/maven-support.gradle'
+    apply from: "$rootProject.projectDir/maven-support.gradle" //modified
+
+    tasks.withType(JavaCompile) {
+        options.encoding = "UTF-8"
+    }
+// END GRADLE FURY #2
 }
