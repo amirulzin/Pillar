@@ -1,7 +1,5 @@
-package com.baseconfig.pillar.drawer.base;
+package com.baseconfig.pillar.drawer;
 
-import android.graphics.drawable.Drawable;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.LayoutRes;
 import android.support.design.widget.CollapsingToolbarLayout;
@@ -53,7 +51,6 @@ public abstract class NestedScrollHomeBaseActivity extends BaseDrawerActivity {
 
         mCollapsingToolbarLayout = (CollapsingToolbarLayout) baseLayout.findViewById(R.id.lbnc_collapsingtoolbar);
         mNestedScrollView = (NestedScrollView) baseLayout.findViewById(R.id.lbnc_scrollview);
-        applySpecialOverlay();
     }
 
     public View inflateNestedContent(@LayoutRes int layoutResourceId) {
@@ -61,15 +58,5 @@ public abstract class NestedScrollHomeBaseActivity extends BaseDrawerActivity {
         NestedScrollView.LayoutParams params = new NestedScrollView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         mNestedScrollView.addView(inflatedView, 0, params);
         return inflatedView;
-    }
-
-    private void applySpecialOverlay() {
-        final Drawable drawable;
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP_MR1) {
-            drawable = getResources().getDrawable(R.drawable.pillar_horizontal_shadow_top);
-        } else
-            drawable = getResources().getDrawable(R.drawable.pillar_horizontal_shadow_top, getTheme());
-
-        getCollapsingToolbarLayout().setForeground(drawable);
     }
 }

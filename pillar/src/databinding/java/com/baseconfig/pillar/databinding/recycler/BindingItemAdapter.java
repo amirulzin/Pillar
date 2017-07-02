@@ -63,7 +63,7 @@ import java.util.ListIterator;
  *      ...
  *      @Override
  *      public int getItemViewType(int position) {
- *          // isHeader() method is provided by {@link FlatData} class
+ *          // isHeader() method is provided by {@link FlatData } class
  *          return getList().get(position).isHeader() ? R.layout.list_header_classroom : R.layout.list_item_student;
  *      }
  *
@@ -78,13 +78,13 @@ import java.util.ListIterator;
  *          ViewDataBinding binding = holder.getBinding();
  *          if (binding instanceof ListHeaderClassroomBinding) {
  *              ListHeaderClassroomBinding b = (ListHeaderClassroomBinding) binding;
- *              b.headerTextView.setText(item.getName()); //getName() method is provided by {@link FlatData} class
+ *              b.headerTextView.setText(item.getName()); //getName() method is provided by {@link FlatData } class
  *          }
  *          else if(binding instanceof ListItemStudentBinding){
  *              ListItemStudentBinding b = (ListItemStudentBinding) binding;
- *              b.studentNameTextView.setText(item.getSubgroup().getStudentName()); //getSubgroup() method is provided by {@link FlatData} class
+ *              b.studentNameTextView.setText(item.getSubgroup().getStudentName()); //getSubgroup() method is provided by {@link FlatData } class
  *
- *              // FlatData just reference the original dataset. Refer {@link FlatData} for more details
+ *              // FlatData just reference the original dataset. Refer {@link FlatData } for more details
  *          }
  *      }
  * }

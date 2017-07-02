@@ -1,4 +1,4 @@
-package com.baseconfig.pillar.drawer.base;
+package com.baseconfig.pillar.drawer;
 
 import android.content.Context;
 import android.os.Build;
@@ -92,7 +92,7 @@ public abstract class BaseDrawerActivity extends AppCompatActivity {
     public void setDrawerNavigationButton(@NonNull Toolbar toolbar) {
         if (mDrawerLayout != null) {
             mDrawerToggle = new ActionBarDrawerToggle(BaseDrawerActivity.this, mDrawerLayout, toolbar, R.string.pillar_acc_drawer_open, R.string.pillar_acc_drawer_close);
-            mDrawerLayout.setDrawerListener(mDrawerToggle);
+            mDrawerLayout.addDrawerListener(mDrawerToggle);
             mDrawerToggle.syncState();
         }
     }

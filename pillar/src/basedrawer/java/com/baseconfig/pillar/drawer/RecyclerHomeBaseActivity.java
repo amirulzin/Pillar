@@ -1,7 +1,5 @@
-package com.baseconfig.pillar.drawer.base;
+package com.baseconfig.pillar.drawer;
 
-import android.graphics.drawable.Drawable;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.widget.RecyclerView;
@@ -53,15 +51,15 @@ public abstract class RecyclerHomeBaseActivity extends BaseDrawerActivity {
 
     }
 
-    public void applySpecialOverlay() {
-        final Drawable drawable;
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP_MR1) {
-            drawable = getResources().getDrawable(R.drawable.pillar_horizontal_shadow_top);
-        } else
-            drawable = getResources().getDrawable(R.drawable.pillar_horizontal_shadow_top, getTheme());
-
-        getCollapsingToolbarLayout().setForeground(drawable);
-
-    }
+//    public void applySpecialOverlay() {
+//        final Drawable drawable;
+//        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP_MR1) {
+//            drawable = getResources().getDrawable(R.drawable.pillar_horizontal_shadow_top);
+//        } else
+//            drawable = getResources().getDrawable(R.drawable.pillar_horizontal_shadow_top, getTheme());
+//
+//        getCollapsingToolbarLayout().setForeground(drawable);
+//
+//    }
 
 }
