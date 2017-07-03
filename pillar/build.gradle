@@ -149,7 +149,7 @@ android {
     libraryVariants.all { variant ->
 
         def variantArtifactName = "$variant.flavorName"
-        println("Name: " + variantArtifactName)
+        println("Variant name: " + variantArtifactName)
 
         //AAR artifacts
         def fileRef = variant.outputs[0].outputFile
@@ -230,11 +230,11 @@ def Task generatePom(String pomArtifactName, String destPath) {
 }
 
 afterEvaluate {
-    println("Config Readout")
+    println("Begin Config Readout for bintrayUpload")
     configurations.getByName(bintrayConfig).artifacts.each {
         a -> println("$a.name : $a.file")
     }
-    println("End config Readout")
+    println("End Config Readout")
 }
 ///END Modular gradle
 apply from: '../bintray.gradle'
