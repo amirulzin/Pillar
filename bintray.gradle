@@ -10,7 +10,7 @@ bintray {
     user = properties.getProperty("bintray.user")
     key = properties.getProperty("bintray.apikey")
 
-    configurations = ['archives']
+    configurations = bintrayConfig != null ? [bintrayConfig] : ['archives']
     pkg {
         repo = bintrayRepo
         name = bintrayName
