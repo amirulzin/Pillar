@@ -1,15 +1,47 @@
 apply plugin: 'com.android.library'
 
+ext {
+    supLibVersion = '25.3.1'
+    libraryVersion = project.version
+    bintrayRepo = 'maven'
+    bintrayName = 'pillar'
+
+    publishedGroupId = 'com.baseconfig'
+    libraryName = 'Pillar'
+    artifactName = 'pillar'
+    yearBegan = '2015'
+    libraryDescription = 'Barebone UI library implementing Material Design for Android'
+
+    siteUrl = 'https://github.com/amirulzin/Pillar'
+    gitUrl = 'https://github.com/amirulzin/Pillar.git'
+
+    developerId = 'amirulzin'
+    developerName = 'Amirul Zin'
+    developerEmail = 'amirul.mdzin@gmail.com'
+
+    licenseName = 'The MIT License'
+    licenseUrl = 'https://opensource.org/licenses/MIT'
+    allLicenses = ["MIT"]
+    bintrayConfig = "customArchives"
+    //bintrayConfig = "archives" //This for default single aar bintray publishing, hence we don't use it
+}
+
+//apply from: 'https://raw.githubusercontent.com/gradle-fury/gradle-fury/master/gradle/android-support.gradle'
+//apply from: '../android-support.gradle' //modified
+
 android {
+
     compileSdkVersion 25
     buildToolsVersion "25.0.3"
     dataBinding {
         enabled = true
     }
+    //defaultPublishConfig 'release'
+
     defaultConfig {
-        minSdkVersion 11
-        targetSdkVersion 25
-        versionCode libraryVersionCode
+        minSdkVersion 11 //
+        targetSdkVersion 25 //
+        versionCode 1 //
         versionName libraryVersion
     }
     buildTypes {
@@ -18,10 +50,32 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
     lintOptions {
         abortOnError false
     }
+
+    publishNonDefault true
+
+
+    productFlavors {
+        databinding {}
+        basedrawer {}
+        utils {}
+        materials {}
+    }
+//    //Composite library for all [EDIT: it works, but we lose flavors AAR in the process] Still finding other simpler solution
+//    flavorDimensions "databinding", "basedrawer", "utils", "materials"
+//    productFlavors.each { flavor ->
+//        flavor.setDimension(flavor.name)
+//    }
+
     packagingOptions {
+        exclude 'APK LICENSE.TXT'
+        exclude 'LICENSE.TXT'
+        exclude 'META-INF/ASL2.0'
+        exclude 'META-INF/DEPENDENCIES'
+        exclude 'META-INF/INDEX.LIST'
         exclude 'META-INF/LICENSE'
         exclude 'META-INF/LICENSE.txt'
         exclude 'META-INF/NOTICE'
@@ -32,14 +86,156 @@ android {
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     testCompile 'junit:junit:4.12'
-    def supLibVersion = '25.3.1'
+
     compile "com.android.support:support-annotations:$supLibVersion"
     compile "com.android.support:appcompat-v7:$supLibVersion"
     compile "com.android.support:support-v4:$supLibVersion"
     compile "com.android.support:design:$supLibVersion"
     compile "com.android.support:recyclerview-v7:$supLibVersion"
 }
+/// BEGIN Modular gradle
+// FOR publishing to JCenter
 
-apply from: 'artifacts.gradle'
-apply from: 'publish.gradle'
-apply from: 'bintray.gradle'
+android {
+
+    // Avoid creating debug
+    variantFilter { variant ->
+        def build = variant.buildType.name
+        if (build.equalsIgnoreCase("debug")) {
+            variant.setIgnore(true);
+        }
+    }
+
+    configurations.maybeCreate(bintrayConfig)
+
+    def Task taskUpload = tasks.findByName('bintrayUpload')
+    def boolean bintrayUploadExist = taskUpload != null
+
+    // Base var for pom artifacts
+    apply plugin: 'maven'
+    def pomOutputDir = "${project.buildDir}/outputs/poms"
+
+    //Generate base pom
+    def basePomPath = "${pomOutputDir}/${artifactName}-${libraryVersion}.pom"
+    def generateBasePom = generatePom(artifactName, basePomPath)
+    artifacts.add(bintrayConfig, file(basePomPath))
+
+    // Generate base source jar
+    def completeSourceSets = android.sourceSets.main.java.srcDirs
+
+    productFlavors.each { flavor ->
+        completeSourceSets += android.sourceSets."${flavor.name}".java.srcDirs
+    }
+//    completeSourceSets.each {
+//        s -> println(s)
+//    }
+    def generateBaseSource = generateSourceJar("", completeSourceSets)
+
+    artifacts.add(bintrayConfig, generateBaseSource)
+
+    //Both are optional for verifying outputs
+    build.dependsOn generateBasePom
+    build.dependsOn generateBaseSource
+
+    // Linkage to bintrayUpload
+    if (bintrayUploadExist) {
+        taskUpload.dependsOn generateBasePom
+        taskUpload.dependsOn generateBaseSource
+        taskUpload.dependsOn build
+    }
+
+    // We don't use `productFlavors.all { flavors-> ... }` since
+    // we need to set variant outputs, which productFlavors doesn't have
+    libraryVariants.all { variant ->
+
+        def variantArtifactName = "$variant.flavorName"
+        println("Name: " + variantArtifactName)
+
+        //AAR artifacts
+        def fileRef = variant.outputs[0].outputFile
+
+        def artifactFullName = "${project.name}-${project.version}-${variantArtifactName}"
+        def artifactAar = artifactFullName + ".aar"
+        def artifactPom = artifactFullName + ".pom"
+
+        def variantFileOutput = new File(fileRef.parentFile, artifactAar)
+        variant.outputs[0].outputFile = variantFileOutput; //IMPORTANT
+
+        artifacts.add(bintrayConfig, variantFileOutput)
+
+        // Source jar artifacts
+        def sourceTask = generateSourceJar(variantArtifactName,
+                android.sourceSets."${variantArtifactName}".java.srcDirs)
+
+        artifacts.add(bintrayConfig, sourceTask)
+
+        // Variants pom
+        def pomPathVariant = "${pomOutputDir}/${artifactPom}"
+        def pomTask = generatePom(variantArtifactName, pomPathVariant)
+
+        artifacts.add(bintrayConfig, file(pomPathVariant))
+
+        if (bintrayUploadExist) {
+            taskUpload.dependsOn sourceTask
+            taskUpload.dependsOn pomTask
+        }
+        // These are optional for verifying outputs
+        build.dependsOn sourceTask
+        build.dependsOn pomTask
+    }
+}
+
+// Source generation
+def Task generateSourceJar(String sourceArtifactName, Object... sourceSetPaths) {
+    return project.task("sourcesJar${sourceArtifactName.capitalize()}", type: Jar) {
+        group 'publishing'
+        classifier = sourceArtifactName.length() > 0 ? "${sourceArtifactName}-sources" : "sources"
+        from sourceSetPaths
+        destinationDir = new File("${project.buildDir}/outputs/sources/")
+    }
+}
+
+// POM Generation
+def Task generatePom(String pomArtifactName, String destPath) {
+    return project.task("pom${pomArtifactName.capitalize()}") {
+        description "Generates a pom.xml for ${pomArtifactName}"
+        group 'publishing'
+        pom {
+            project {
+                groupId groupId
+                artifactId pomArtifactName
+                version libraryVersion
+                packaging 'aar'
+                inceptionYear yearBegan
+                licenses {
+                    license {
+                        name licenseName
+                        url licenseUrl
+                        distribution 'repo'
+                    }
+                }
+            }
+        }.withXml {
+            //As per https://gist.github.com/delor/f70560f14674b322dcd2
+            def dependenciesNode = asNode().appendNode('dependencies')
+
+            configurations.compile.allDependencies.each { dependency ->
+                def dependencyNode = dependenciesNode.appendNode('dependency')
+                dependencyNode.appendNode('groupId', dependency.group)
+                dependencyNode.appendNode('artifactId', dependency.name)
+                dependencyNode.appendNode('version', dependency.version)
+            }
+        }.writeTo(destPath)
+    }
+}
+
+afterEvaluate {
+    println("Config Readout")
+    configurations.getByName(bintrayConfig).artifacts.each {
+        a -> println("$a.name : $a.file")
+    }
+    println("End config Readout")
+}
+///END Modular gradle
+apply from: '../bintray.gradle'
+
