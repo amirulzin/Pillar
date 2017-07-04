@@ -64,7 +64,8 @@ android {
         utils {}
         materials {}
     }
-//    //Composite library for all [EDIT: it works, but we lose flavors AAR in the process] Still finding other simpler solution
+//    Composite library for all [EDIT: it works, but we lose flavors AAR in the process]
+//    Still finding other simpler solution
 //    flavorDimensions "databinding", "basedrawer", "utils", "materials"
 //    productFlavors.each { flavor ->
 //        flavor.setDimension(flavor.name)
@@ -93,9 +94,8 @@ dependencies {
     compile "com.android.support:design:$supLibVersion"
     compile "com.android.support:recyclerview-v7:$supLibVersion"
 }
-/// BEGIN Modular gradle
-// FOR publishing to JCenter
 
+/// BEGIN Modular gradle for publishing to JCenter
 android {
 
     // Avoid creating debug
@@ -115,7 +115,8 @@ android {
     apply plugin: 'maven'
     def pomOutputDir = "${project.buildDir}/outputs/poms"
 
-    //Generate base pom
+    /// BASE START
+    // Generate base pom
     def basePomPath = "${pomOutputDir}/${artifactName}-${libraryVersion}.pom"
     def generateBasePom = generatePom(artifactName, basePomPath)
     artifacts.add(bintrayConfig, file(basePomPath))
@@ -126,14 +127,11 @@ android {
     productFlavors.each { flavor ->
         completeSourceSets += android.sourceSets."${flavor.name}".java.srcDirs
     }
-//    completeSourceSets.each {
-//        s -> println(s)
-//    }
     def generateBaseSource = generateSourceJar("", completeSourceSets)
 
     artifacts.add(bintrayConfig, generateBaseSource)
 
-    //Both are optional for verifying outputs
+    // Both are optional for verifying outputs
     build.dependsOn generateBasePom
     build.dependsOn generateBaseSource
 
@@ -144,6 +142,9 @@ android {
         taskUpload.dependsOn build
     }
 
+    /// BASE END
+
+    /// VARIANT START
     // We don't use `productFlavors.all { flavors-> ... }` since
     // we need to set variant outputs, which productFlavors doesn't have
     libraryVariants.all { variant ->
@@ -183,6 +184,7 @@ android {
         build.dependsOn sourceTask
         build.dependsOn pomTask
     }
+    /// VARIANT END
 }
 
 // Core name generation
@@ -221,7 +223,7 @@ def Task generatePom(String pomArtifactName, String destPath) {
                 }
             }
         }.withXml {
-            //As per https://gist.github.com/delor/f70560f14674b322dcd2
+            // As per https://gist.github.com/delor/f70560f14674b322dcd2
             def dependenciesNode = asNode().appendNode('dependencies')
 
             configurations.compile.allDependencies.each { dependency ->
@@ -241,6 +243,6 @@ afterEvaluate {
     }
     println("End Config Readout")
 }
-///END Modular gradle
+/// END Modular gradle
 apply from: '../bintray.gradle'
 
