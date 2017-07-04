@@ -18,11 +18,11 @@ allprojects {
         }
     }
 // BEGIN GRADLE FURY #2
-    project.group = (project.hasProperty('pom.groupId')
-            ? project.property('pom.groupId') : "")
-
-    project.version =
-            (project.hasProperty('pom.version') ? project.property('pom.version') : "1.0")
+//    project.group = (project.hasProperty('pom.groupId')
+//            ? project.property('pom.groupId') : "")
+//
+//    project.version =
+//            (project.hasProperty('pom.version') ? project.property('pom.version') : "1.0")
 
     // NOTE: gradlew publishToMavenLocal (or install) will only produce debug aar in
     // local Maven repo if release signing is not used
