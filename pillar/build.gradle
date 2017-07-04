@@ -209,7 +209,7 @@ def Task generatePom(String pomArtifactName, String destPath) {
         group 'publishing'
         pom {
             project {
-                groupId groupId
+                groupId publishedGroupId
                 artifactId pomArtifactName
                 version libraryVersion
                 packaging 'aar'
