@@ -154,7 +154,7 @@ android {
         //AAR artifacts
         def fileRef = variant.outputs[0].outputFile
 
-        def artifactFullName = "${project.name}-${project.version}-${variantArtifactName}"
+        def artifactFullName = generateString(variantArtifactName)
         def artifactAar = artifactFullName + ".aar"
         def artifactPom = artifactFullName + ".pom"
 
@@ -183,6 +183,11 @@ android {
         build.dependsOn sourceTask
         build.dependsOn pomTask
     }
+}
+
+// Core name generation
+def generateString(String variantArtifactName) {
+    return "${project.name}-${project.version}-${variantArtifactName}"
 }
 
 // Source generation
