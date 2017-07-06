@@ -4,10 +4,10 @@ ext {
     supLibVersion = '25.3.1'
     libraryVersion = '0.2.0'
     bintrayRepo = 'maven'
-    publishedGroupId = 'com.baseconfig'
+    publishedGroupId = 'com.baseconfig.pillar'
 
     libraryName = 'Pillar'
-    artifactName = 'pillar'
+    bintrayArtifactName = 'pillar'
     yearBegan = '2015'
     libraryDescription = 'Barebone UI library implementing Material Design for Android'
 
@@ -56,19 +56,16 @@ android {
 
     publishNonDefault true
 
-
     productFlavors {
         databinding {}
         basedrawer {}
         utils {}
         materials {}
     }
-//    Composite library for all [EDIT: it works, but we lose flavors AAR in the process]
-//    Still finding other simpler solution
-//    flavorDimensions "databinding", "basedrawer", "utils", "materials"
-//    productFlavors.each { flavor ->
-//        flavor.setDimension(flavor.name)
-//    }
+
+    productFlavors.each { flavor ->
+        flavor.manifestPlaceholders = [libName: flavor.name]
+    }
 
     packagingOptions {
         exclude 'APK LICENSE.TXT'
@@ -116,31 +113,35 @@ android {
 
     /// BASE START
     // Generate base pom
-    def basePomPath = "${pomOutputDir}/${artifactName}-${libraryVersion}.pom"
-    def generateBasePom = generatePom(artifactName, basePomPath)
-    artifacts.add(bintrayConfig, file(basePomPath))
+    def generateBase = false
+    if (generateBase) {
+        //def basePomPath = "${pomOutputDir}/${bintrayArtifactName}-${libraryVersion}.pom"
+        def basePomPath = "${pomOutputDir}/pom.xml"
+        def generateBasePom = generatePom(bintrayArtifactName, basePomPath)
 
-    // Generate base source jar
-    def completeSourceSets = android.sourceSets.main.java.srcDirs
+        artifacts.add(bintrayConfig, file(basePomPath))
 
-    productFlavors.each { flavor ->
-        completeSourceSets += android.sourceSets."${flavor.name}".java.srcDirs
+        // Generate base source jar
+        def completeSourceSets = android.sourceSets.main.java.srcDirs
+
+        productFlavors.each { flavor ->
+            completeSourceSets += android.sourceSets."${flavor.name}".java.srcDirs
+        }
+        def generateBaseSource = generateSourceJar("", completeSourceSets)
+
+        artifacts.add(bintrayConfig, generateBaseSource)
+
+        // Both are optional for verifying outputs
+        build.dependsOn generateBasePom
+        build.dependsOn generateBaseSource
+
+        // Linkage to bintrayUpload
+        if (bintrayUploadExist) {
+            taskUpload.dependsOn generateBasePom
+            taskUpload.dependsOn generateBaseSource
+        }
+
     }
-    def generateBaseSource = generateSourceJar("", completeSourceSets)
-
-    artifacts.add(bintrayConfig, generateBaseSource)
-
-    // Both are optional for verifying outputs
-    build.dependsOn generateBasePom
-    build.dependsOn generateBaseSource
-
-    // Linkage to bintrayUpload
-    if (bintrayUploadExist) {
-        taskUpload.dependsOn generateBasePom
-        taskUpload.dependsOn generateBaseSource
-        taskUpload.dependsOn build
-    }
-
     /// BASE END
 
     /// VARIANT START
@@ -175,29 +176,67 @@ android {
 
         artifacts.add(bintrayConfig, file(pomPathVariant))
 
+        def javadocJarTask = generateJavadocJar(variant)
+
+        artifacts.add(bintrayConfig, javadocJarTask)
+
         if (bintrayUploadExist) {
             taskUpload.dependsOn sourceTask
             taskUpload.dependsOn pomTask
+            taskUpload.dependsOn javadocJarTask
         }
         // These are optional for verifying outputs
         build.dependsOn sourceTask
         build.dependsOn pomTask
+        build.dependsOn javadocJarTask
     }
     /// VARIANT END
 }
 
 // Core name generation
 def generateString(String variantArtifactName) {
-    return "${project.name}-${project.version}-${variantArtifactName}"
+    //return "${project.name}-${project.version}-${variantArtifactName}" //OLD
+    return "${variantArtifactName}-${project.version}"
 }
 
 // Source generation
 def Task generateSourceJar(String sourceArtifactName, Object... sourceSetPaths) {
     return project.task("sourcesJar${sourceArtifactName.capitalize()}", type: Jar) {
         group 'publishing'
-        classifier = sourceArtifactName.length() > 0 ? "${sourceArtifactName}-sources" : "sources"
+        baseName sourceArtifactName
+        classifier "sources"
         from sourceSetPaths
-        destinationDir = new File("${project.buildDir}/outputs/sources/")
+//        destinationDir = new File("${project.buildDir}/outputs/sources/")
+    }
+}
+
+// Javadoc generation
+def Task generateJavadocJar(com.android.build.gradle.api.LibraryVariant variant) {
+    def javadocTaskName = "javadoc${variant.flavorName.capitalize()}"
+    def javadocJarTaskName = "javadocJar${variant.flavorName.capitalize()}"
+
+    task(javadocTaskName, type: Javadoc) {
+        title = "${variant.flavorName.capitalize()} API"
+        group = 'javadoc'
+        source = variant.javaCompile.source
+        options.links("http://docs.oracle.com/javase/7/docs/api/");
+        options.linksOffline("http://d.android.com/reference", "${android.sdkDirectory}/docs/reference");
+
+        // First add all of your dependencies to the classpath, then add the android jars
+        classpath += files(variant.javaCompile.classpath.files)
+        classpath += files(android.getBootClasspath())
+
+        // We're excluding these generated files
+        exclude '**/BuildConfig.java'
+        exclude '**/R.java'
+        failOnError = false
+    }
+
+    return task(javadocJarTaskName, type: Jar, dependsOn: javadocTaskName) {
+        group = 'publishing'
+        baseName variant.flavorName
+        classifier = 'javadoc'
+        from tasks[javadocTaskName].destinationDir
     }
 }
 
@@ -208,7 +247,7 @@ def Task generatePom(String pomArtifactName, String destPath) {
         group 'publishing'
         pom {
             project {
-                name libraryName
+                name pomArtifactName.capitalize()
                 groupId publishedGroupId
                 artifactId pomArtifactName
                 version libraryVersion
