@@ -1,5 +1,6 @@
 apply plugin: 'com.jfrog.bintray'
-
+// Important! it is used by bintrayUpload
+group = publishedGroupId
 version = libraryVersion
 
 // Bintray
@@ -7,13 +8,14 @@ Properties properties = new Properties()
 properties.load(project.rootProject.file('local.properties').newDataInputStream())
 
 bintray {
+    override = true
     user = properties.getProperty("bintray.user")
     key = properties.getProperty("bintray.apikey")
 
     configurations = bintrayConfig != null ? [bintrayConfig] : ['archives']
     pkg {
         repo = bintrayRepo
-        name = publishedGroupId
+        name = bintrayArtifactName
         desc = libraryDescription
         websiteUrl = siteUrl
         vcsUrl = gitUrl
@@ -21,7 +23,6 @@ bintray {
         publish = false
         publicDownloadNumbers = true
         version {
-            name = libraryVersion
             desc = libraryDescription
             gpg {
                 sign = true //Determines whether to GPG sign the files. The default is false
