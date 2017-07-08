@@ -6,9 +6,6 @@ ext {
 
 apply from: '../android.gradle'
 android {
-    dataBinding {
-        enabled = true
-    }
 }
 
 dependencies {
