@@ -4,5 +4,5 @@
 
     <library
         android:name="${libName}"
-        android:label="${libName}"></library>
+        android:label="${libName}" />
 </manifest>
