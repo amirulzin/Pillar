@@ -1,7 +1,7 @@
 ext {
     libraryName = project.name //will output module name
     bintrayArtifactName = project.name
-    libraryDescription = 'Base UI library that extends default Android drawer layout behavior'
+    libraryDescription = 'Base utils library for Pillar'
 }
 
 apply from: '../android.gradle'
