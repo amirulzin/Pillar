@@ -242,5 +242,8 @@ def Task generatePom(String pomArtifactName, String destPath) {
 }
 
 /// END Modular gradle
-apply from: '../bintray.gradle'
 
+afterEvaluate {
+    apply from: '../install.gradle'
+    apply from: '../bintray.gradle'
+}
