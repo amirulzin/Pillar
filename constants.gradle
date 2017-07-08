@@ -1,0 +1,33 @@
+ext {
+    minSdkVer = 11
+    targetSdkVer = 25
+    compileSdkVer = 25
+    buildToolsVer = '25.0.3'
+    supLibVersion = '25.3.1'
+
+    libraryVersion = '0.2.0'
+    libraryVersionCode = 1
+
+    bintrayRepo = 'maven'
+    publishedGroupId = 'com.baseconfig.pillar'
+
+    //Default to be overriden
+    libraryManifestPlaceholders = [libName: libraryName]
+    libraryName = 'Pillar'
+    bintrayArtifactName = 'pillar'
+    yearBegan = '2015'
+    libraryDescription = 'Barebone UI library implementing Material Design for Android'
+
+    siteUrl = 'https://github.com/amirulzin/Pillar'
+    gitUrl = 'https://github.com/amirulzin/Pillar.git'
+
+    developerId = 'amirulzin'
+    developerName = 'Amirul Zin'
+    developerEmail = 'amirul.mdzin@gmail.com'
+
+    licenseName = 'The MIT License'
+    licenseUrl = 'https://opensource.org/licenses/MIT'
+    allLicenses = ["MIT"]
+    bintrayConfig = "customArchives"
+    //bintrayConfig = "archives" //This for default single aar bintray publishing, hence we don't use it
+}

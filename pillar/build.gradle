@@ -1,33 +1,5 @@
 apply plugin: 'com.android.library'
 
-ext {
-    supLibVersion = '25.3.1'
-    libraryVersion = '0.2.0'
-    bintrayRepo = 'maven'
-    publishedGroupId = 'com.baseconfig.pillar'
-
-    libraryName = 'Pillar'
-    bintrayArtifactName = 'pillar'
-    yearBegan = '2015'
-    libraryDescription = 'Barebone UI library implementing Material Design for Android'
-
-    siteUrl = 'https://github.com/amirulzin/Pillar'
-    gitUrl = 'https://github.com/amirulzin/Pillar.git'
-
-    developerId = 'amirulzin'
-    developerName = 'Amirul Zin'
-    developerEmail = 'amirul.mdzin@gmail.com'
-
-    licenseName = 'The MIT License'
-    licenseUrl = 'https://opensource.org/licenses/MIT'
-    allLicenses = ["MIT"]
-    bintrayConfig = "customArchives"
-    //bintrayConfig = "archives" //This for default single aar bintray publishing, hence we don't use it
-}
-
-//apply from: 'https://raw.githubusercontent.com/gradle-fury/gradle-fury/master/gradle/android-support.gradle'
-//apply from: '../android-support.gradle' //modified
-
 android {
 
     compileSdkVersion 25
