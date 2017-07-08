@@ -1,4 +1,4 @@
-package com.baseconfig.pillar.util;
+package java.com.baseconfig.pillar.util;
 
 import android.content.Intent;
 import android.support.annotation.Nullable;

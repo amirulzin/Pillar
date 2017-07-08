@@ -1,0 +1,21 @@
+ext {
+    libraryName = project.name //will output module name
+    bintrayArtifactName = project.name
+    libraryDescription = 'Base UI library that extends default Android drawer layout behavior'
+}
+
+apply from: '../android.gradle'
+android {
+
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })
+    compile "com.android.support:appcompat-v7:${supLibVersion}"
+    //compile "com.android.support:recyclerview-v7:$supLibVersion"
+    compile "com.android.support:support-v4:${supLibVersion}"
+    testCompile 'junit:junit:4.12'
+}

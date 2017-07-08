@@ -1,4 +1,4 @@
-package com.baseconfig.pillar.util;
+package java.com.baseconfig.pillar.util;
 
 import java.net.URL;
 import java.util.regex.Pattern;

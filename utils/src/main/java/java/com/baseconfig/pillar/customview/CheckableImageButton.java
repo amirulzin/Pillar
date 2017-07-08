@@ -1,4 +1,4 @@
-package com.baseconfig.pillar.customview;
+package java.com.baseconfig.pillar.customview;
 /*
  * The MIT License (MIT)
  *
