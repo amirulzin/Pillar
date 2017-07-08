@@ -280,13 +280,6 @@ def Task generatePom(String pomArtifactName, String destPath) {
     }
 }
 
-afterEvaluate {
-    println("Begin Config Readout for bintrayUpload")
-    configurations.getByName(bintrayConfig).artifacts.each {
-        a -> println("$a.name : $a.file")
-    }
-    println("End Config Readout")
-}
 /// END Modular gradle
 apply from: '../bintray.gradle'
 
