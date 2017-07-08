@@ -246,4 +246,5 @@ def Task generatePom(String pomArtifactName, String destPath) {
 afterEvaluate {
     apply from: '../install.gradle'
     apply from: '../bintray.gradle'
+    bintrayUpload.dependsOn install
 }
