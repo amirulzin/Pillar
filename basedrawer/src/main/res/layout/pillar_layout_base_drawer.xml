@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v4.widget.DrawerLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/pillar_lbd_drawerlayout"
     android:layout_width="match_parent"
@@ -11,7 +10,7 @@
         android:id="@+id/pillar_lbd_contentcontainer"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:fitsSystemWindows="true"/>
+        android:fitsSystemWindows="true" />
 
     <android.support.design.widget.NavigationView
         android:id="@+id/pillar_lbd_navigationview"
@@ -22,6 +21,6 @@
         android:scrollbarSize="4dp"
         android:scrollbarStyle="outsideOverlay"
         app:itemIconTint="?attr/colorAccent"
-        app:itemTextColor="?attr/colorAccent"/>
+        app:itemTextColor="?attr/colorAccent" />
 
 </android.support.v4.widget.DrawerLayout>
