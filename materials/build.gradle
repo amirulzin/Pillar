@@ -1,6 +1,6 @@
 ext {
     libraryName = project.name //will output module name
-    bintrayArtifactName = project.name
+    libraryArtifactName = project.name
     libraryDescription = 'Base material resources library for Pillar'
 }
 

@@ -1,6 +1,6 @@
 ext {
     libraryName = project.name //will output module name
-    bintrayArtifactName = project.name
+    libraryArtifactName = project.name
     libraryDescription = 'Base databinding library that extends default Android databinding behavior'
 }
 

@@ -16,7 +16,7 @@ bintray {
     configurations = bintrayConfig != null ? [bintrayConfig] : ['archives']
     pkg {
         repo = bintrayRepo
-        name = bintrayArtifactName
+        name = bintrayBaseName
         desc = libraryDescription
         websiteUrl = siteUrl
         vcsUrl = gitUrl
@@ -34,11 +34,13 @@ bintray {
     }
 }
 
-task readConfig << {
-    println("Begin Config Readout for bintrayUpload")
-    configurations.getByName(bintrayConfig).allArtifacts.each {
-        a -> println("$a.name : $a.file")
+task readConfig {
+    doLast {
+        println("Begin Config Readout for bintrayUpload")
+        configurations.getByName(bintrayConfig).allArtifacts.each {
+            a -> println("$a.name : $a.file")
+        }
+        println("End Config Readout")
     }
-    println("End Config Readout")
 }
 bintrayUpload.finalizedBy { readConfig }
