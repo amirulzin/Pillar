@@ -1,1 +1,1 @@
-include ':databinding', ':basedrawer', ':utils'
+include ':databinding', ':basedrawer', ':utils', ':materials'
