@@ -14,8 +14,12 @@ ext {
     //Default to be overriden
     libraryManifestPlaceholders = [libName: libraryName]
     bintrayBaseName = 'Pillar'
+
+    //Below need to be overriden by modules.
     //libraryName = 'Pillar'
-    //libraryArtifactName = 'pillar'
+    //libraryArtifactName = 'pillar' //will be used for publishing
+    libraryArtifactPackaging = 'aar' //if not overriden, will default to 'aar'
+
     yearBegan = '2015'
     libraryDescription = 'Modular UI library implementing Material Design for Android'
 
@@ -29,6 +33,7 @@ ext {
     licenseName = 'The MIT License'
     licenseUrl = 'https://opensource.org/licenses/MIT'
     allLicenses = ["MIT"]
+
     //bintrayConfig = "customArchives"
     bintrayConfig = "archives"
     //This for default single aar bintray publishing, hence we don't use it
