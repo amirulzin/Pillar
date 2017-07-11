@@ -21,7 +21,7 @@ import java.util.ListIterator;
  *      ...
  *      @Override
  *      public BindingHolder<? extends ViewDataBinding> onCreateBindingHolder(LayoutInflater inflater, ViewGroup parent, int viewType) {
- *          return new BindingHolder<>(DataBindingUtil.inflate(inflater, viewType,  R.layout.my_list_item_layout, false));
+ *          return new BindingHolder<>(DataBindingUtil.inflate(inflater, R.layout.my_list_item_layout, parent, false));
  *      }
  *
  *      @Override
@@ -70,7 +70,7 @@ import java.util.ListIterator;
  *      @Override
  *      public BindingHolder<? extends ViewDataBinding> onCreateBindingHolder(LayoutInflater inflater, ViewGroup parent, int viewType) {
  *          // notice we directly use the viewType as suggested by the official support library
- *          return new BindingHolder<>(DataBindingUtil.inflate(inflater, viewType, viewType, false));
+ *          return new BindingHolder<>(DataBindingUtil.inflate(inflater, viewType, parent, false));
  *      }
  *
  *      @Override
@@ -214,7 +214,7 @@ public abstract class BindingItemAdapter<T> extends RecyclerView.Adapter<Binding
      * given regular expression.
      * <p>Note: This documentation is sourced from com.android.internal package introduced in API 24</p>
      * <p>
-     * <p>{@code ListPredicate<T>} pretty much is something similar in the same vein but provide
+     * <p>{@code ListPredicate<T>} is pretty much something similar in the same vein but provide
      * interface specific to RecyclerView adapters.</p>
      */
     public interface ListPredicate<T> {
