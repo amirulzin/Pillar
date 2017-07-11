@@ -39,6 +39,7 @@ android {
 }
 
 afterEvaluate {
+    apply from: '../artifacts.gradle'
     apply from: '../install.gradle'
     apply from: '../bintray.gradle'
     bintrayUpload.dependsOn install
