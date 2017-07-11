@@ -7,8 +7,6 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ImageView;
 
-import com.baseconfig.pillar.R;
-
 
 public abstract class RecyclerHomeBaseActivity extends BaseDrawerActivity {
     private RecyclerView mRecyclerView;

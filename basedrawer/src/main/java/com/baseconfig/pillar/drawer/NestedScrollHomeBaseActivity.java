@@ -10,8 +10,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
-import com.baseconfig.pillar.R;
-
 
 public abstract class NestedScrollHomeBaseActivity extends BaseDrawerActivity {
     private NestedScrollView mNestedScrollView;

@@ -19,7 +19,6 @@ import android.view.View;
 import android.view.Window;
 import android.widget.FrameLayout;
 
-import com.baseconfig.pillar.R;
 
 public abstract class BaseDrawerActivity extends AppCompatActivity {
     private DrawerLayout mDrawerLayout;
