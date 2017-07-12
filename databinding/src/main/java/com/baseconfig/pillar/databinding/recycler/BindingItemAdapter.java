@@ -13,8 +13,8 @@ import java.util.List;
 import java.util.ListIterator;
 
 /**
- * RecyclerView adapter for a list of T objects where its layouts implemented databinding. <br/>
- * Example #1: <br/>
+ * RecyclerView adapter for a list of T objects where its layouts implemented databinding. <br>
+ * Example #1: <br>
  * Given a list of Student objects to be displayed in a recycler view, the adapter below is created:
  * <pre>{@code
  * public class MyAdapter extends BindingItemAdapter<Student> {
@@ -34,9 +34,9 @@ import java.util.ListIterator;
  *      }
  * }
  * }</pre>
- * Example #2 (complex): <br/>
- * 1. You have multiple view types for list item (section headers, and actual list item) <br/>
- * 2. You have to display a list of Classroom where each Classroom object contains a list of Students (sectioning) <br/>
+ * Example #2 (complex): <br>
+ * 1. You have multiple view types for list item (section headers, and actual list item) <br>
+ * 2. You have to display a list of Classroom where each Classroom object contains a list of Students (sectioning) <br>
  * <pre>{@code
  * public class MyActivity extends AppCompatActivity{
  *      @Override
