@@ -5,7 +5,7 @@ ext {
     buildToolsVer = '25.0.3'
     supLibVersion = '25.3.1'
 
-    libraryVersion = "0.2.1"
+    libraryVersion = "0.2.2"
     libraryVersionCode = 1
 
     bintrayRepo = 'maven'
@@ -36,5 +36,4 @@ ext {
 
     //bintrayConfig = "customArchives"
     bintrayConfig = "archives"
-    //This for default single aar bintray publishing, hence we don't use it
 }
