@@ -7,9 +7,20 @@ import android.view.ViewTreeObserver;
 
 public class ContextUtils {
 
-    public static int getPixels(final Context context, float dp) {
+    /**
+     * Get pixels from the given dp (rounded via {@link Math#round})
+     */
+    public static int getPixels(final Context context, int dp) {
         return Math.round(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, context.getResources()
                 .getDisplayMetrics()));
+    }
+
+    /**
+     * Get dp from the given pixel (rounded via {@link Math#round})
+     */
+    public static int getDp(final Context context, int px) {
+        return Math.round(px / context.getResources()
+                .getDisplayMetrics().density);
     }
 
     /**
