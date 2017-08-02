@@ -154,7 +154,7 @@ public abstract class BindingItemAdapter<T> extends RecyclerView.Adapter<Binding
      * @return A {@link Pair} of T object (left) to its index location (right) or null if pair if item not found
      */
     @Nullable
-    public Pair<T, Integer> getItem(ListPredicate<T> predicate) {
+    public Pair<T, Integer> getItem(CompatPredicate<T> predicate) {
         List<T> collection = getCollection();
         for (int i = 0; i < collection.size(); i++) {
             T t = collection.get(i);
@@ -178,7 +178,7 @@ public abstract class BindingItemAdapter<T> extends RecyclerView.Adapter<Binding
      *
      * @param list New list that is separate from the original backing list.
      */
-    public void updateList(final List<T> list, final ListPredicate<T> compare) {
+    public void updateList(final List<T> list, final DiffPredicate<T> compare) {
         if (collection == null) {
             collection = list;
             notifyItemRangeInserted(0, collection.size());
@@ -214,18 +214,11 @@ public abstract class BindingItemAdapter<T> extends RecyclerView.Adapter<Binding
      * given regular expression.
      * <p>Note: This documentation is sourced from com.android.internal package introduced in API 24</p>
      * <p>
-     * <p>{@code ListPredicate<T>} is pretty much something similar in the same vein but provide
+     * <p>{@code DiffPredicate<T>} is pretty much something similar in the same vein but provide
      * interface specific to RecyclerView adapters.</p>
      */
-    public interface ListPredicate<T> {
+    public interface DiffPredicate<T> {
 
-        /**
-         * Used in {@link #getItem(ListPredicate)} where this should return true
-         * if the object matches by id, name, or Object.equals() and etc. in its implementation.
-         * <p>
-         * If {@link #getItem(ListPredicate)} is not used, no need to implement this.
-         */
-        boolean apply(T t);
 
         /**
          * {@link DiffUtil} will use this to decide whether item are the same (id, name, color, etc.)
@@ -249,4 +242,18 @@ public abstract class BindingItemAdapter<T> extends RecyclerView.Adapter<Binding
          */
         boolean isEquals(T oldObject, T newObject);
     }
+
+    public interface CompatPredicate<T> {
+
+        /**
+         * Analogous to Java 8 and RxJava Predicate class
+         * Used in {@link #getItem(CompatPredicate)} where this should return true
+         * if the object matches by id, name, or Object.equals() and etc. in its implementation.
+         * <p>
+         * If {@link #getItem(CompatPredicate)} is not used, no need to implement this.
+         */
+        boolean apply(T t);
+
+    }
+
 }
