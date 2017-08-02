@@ -96,11 +96,7 @@ import java.util.ListIterator;
 
 public abstract class BindingItemAdapter<T> extends RecyclerView.Adapter<BindingHolder<? extends ViewDataBinding>> {
 
-    private final List<T> collection;
-
-    public BindingItemAdapter(final List<T> collection) {
-        this.collection = collection;
-    }
+    private List<T> collection;
 
     public List<T> getCollection() {
         return collection;
@@ -121,10 +117,10 @@ public abstract class BindingItemAdapter<T> extends RecyclerView.Adapter<Binding
 
     @Override
     public int getItemCount() {
-        return collection.size();
+        return collection == null ? 0 : collection.size();
     }
 
-    public abstract void onBind(final BindingHolder<? extends ViewDataBinding> holder, final T item, final int position);
+    public abstract void onBind(final BindingHolder<? extends ViewDataBinding> holder, final T t, final int position);
 
     /**
      * Remove item from the list
@@ -183,28 +179,32 @@ public abstract class BindingItemAdapter<T> extends RecyclerView.Adapter<Binding
      * @param list New list that is separate from the original backing list.
      */
     public void updateList(final List<T> list, final ListPredicate<T> compare) {
-        DiffUtil.calculateDiff(new DiffUtil.Callback() {
-            @Override
-            public int getOldListSize() {
-                return getCollection().size();
-            }
+        if (collection == null) {
+            collection = list;
+            notifyItemRangeInserted(0, collection.size());
+        } else {
+            DiffUtil.calculateDiff(new DiffUtil.Callback() {
+                @Override
+                public int getOldListSize() {
+                    return getCollection().size();
+                }
 
-            @Override
-            public int getNewListSize() {
-                return list.size();
-            }
+                @Override
+                public int getNewListSize() {
+                    return list.size();
+                }
 
-            @Override
-            public boolean areItemsTheSame(int oldItemPosition, int newItemPosition) {
+                @Override
+                public boolean areItemsTheSame(int oldItemPosition, int newItemPosition) {
+                    return compare.isSimilar(getCollection().get(oldItemPosition), list.get(newItemPosition));
+                }
 
-                return compare.isSimilar(getCollection().get(oldItemPosition), list.get(newItemPosition));
-            }
-
-            @Override
-            public boolean areContentsTheSame(int oldItemPosition, int newItemPosition) {
-                return compare.isEquals(getCollection().get(oldItemPosition), list.get(newItemPosition));
-            }
-        }).dispatchUpdatesTo(this);
+                @Override
+                public boolean areContentsTheSame(int oldItemPosition, int newItemPosition) {
+                    return compare.isEquals(getCollection().get(oldItemPosition), list.get(newItemPosition));
+                }
+            }).dispatchUpdatesTo(this);
+        }
     }
 
     /**
