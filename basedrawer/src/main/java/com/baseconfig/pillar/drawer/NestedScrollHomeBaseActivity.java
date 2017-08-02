@@ -10,7 +10,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
-
 public abstract class NestedScrollHomeBaseActivity extends BaseDrawerActivity {
     private NestedScrollView mNestedScrollView;
     private CollapsingToolbarLayout mCollapsingToolbarLayout;

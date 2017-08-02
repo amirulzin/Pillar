@@ -7,7 +7,6 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ImageView;
 
-
 public abstract class RecyclerHomeBaseActivity extends BaseDrawerActivity {
     private RecyclerView mRecyclerView;
     private CollapsingToolbarLayout mCollapsingToolbarLayout;
@@ -48,16 +47,5 @@ public abstract class RecyclerHomeBaseActivity extends BaseDrawerActivity {
         mRecyclerView = (RecyclerView) baseLayout.findViewById(R.id.lbnc_recyclerview);
 
     }
-
-//    public void applySpecialOverlay() {
-//        final Drawable drawable;
-//        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP_MR1) {
-//            drawable = getResources().getDrawable(R.drawable.pillar_horizontal_shadow_top);
-//        } else
-//            drawable = getResources().getDrawable(R.drawable.pillar_horizontal_shadow_top, getTheme());
-//
-//        getCollapsingToolbarLayout().setForeground(drawable);
-//
-//    }
 
 }

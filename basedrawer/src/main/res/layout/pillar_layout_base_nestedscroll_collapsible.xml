@@ -52,14 +52,4 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <!--<android.support.design.widget.FloatingActionButton-->
-    <!--android:id="@+id/lbnc_mainfab"-->
-    <!--android:layout_width="wrap_content"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:layout_gravity="bottom|center_horizontal"-->
-    <!--android:layout_marginBottom="24dp"-->
-    <!--android:visibility="gone"-->
-    <!--app:borderWidth="0dp"-->
-    <!--tools:visibility="visible" />-->
-
 </android.support.design.widget.CoordinatorLayout>
