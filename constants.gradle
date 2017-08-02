@@ -5,7 +5,7 @@ ext {
     buildToolsVer = '25.0.3'
     supLibVersion = '25.3.1'
 
-    libraryVersion = "0.2.2"
+    libraryVersion = "0.3.0"
     libraryVersionCode = 1
 
     bintrayRepo = 'maven'
