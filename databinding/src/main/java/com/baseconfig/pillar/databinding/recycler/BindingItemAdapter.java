@@ -2,10 +2,8 @@ package com.baseconfig.pillar.databinding.recycler;
 
 import android.databinding.ViewDataBinding;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.v7.util.DiffUtil;
 import android.support.v7.widget.RecyclerView;
-import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
@@ -94,6 +92,7 @@ import java.util.ListIterator;
  * Simple list methods are also provided but feel free to roll your own implementation if you have a specialized list.
  */
 
+@SuppressWarnings("WeakerAccess")
 public abstract class BindingItemAdapter<T> extends RecyclerView.Adapter<BindingHolder<? extends ViewDataBinding>> {
 
     protected List<T> collection;
@@ -152,24 +151,6 @@ public abstract class BindingItemAdapter<T> extends RecyclerView.Adapter<Binding
     }
 
     /**
-     * A helper method to get an item from base collection where the predicate matches or null if item not found.
-     * The usage of this method is entirely optional and are not used within the library.
-     *
-     * @return A {@link Pair} of T object (left) to its index location (right) or null if pair if item not found
-     */
-    @Nullable
-    public Pair<T, Integer> getItem(CompatPredicate<T> predicate) {
-        List<T> collection = getCollection();
-        for (int i = 0; i < collection.size(); i++) {
-            T t = collection.get(i);
-            if (predicate.apply(t)) {
-                return new Pair<>(t, i);
-            }
-        }
-        return null;
-    }
-
-    /**
      * Notify item changed for the given item
      */
     public void notifyItemChanged(T t) {
@@ -178,88 +159,19 @@ public abstract class BindingItemAdapter<T> extends RecyclerView.Adapter<Binding
 
     /**
      * Update the backing list with new list of a probably similar objects.
-     * This uses {@link DiffUtil} in the implementation
+     * This uses {@link DiffUtil} in the implementation.
      *
-     * @param list New list that is separate from the original backing list.
+     * @param callback DiffUtil callback that is used to determine object updates.
+     * @param list     New list that is separate from the original backing list.
      */
-    public void updateList(final List<T> list, final DiffPredicate<T> compare) {
+    public void updateList(final List<T> list, DiffUtil.Callback callback) {
         if (collection == null) {
             collection = list;
             notifyItemRangeInserted(0, collection.size());
         } else {
-            DiffUtil.DiffResult diffResult = DiffUtil.calculateDiff(new DiffUtil.Callback() {
-                @Override
-                public int getOldListSize() {
-                    return getCollection().size();
-                }
-
-                @Override
-                public int getNewListSize() {
-                    return list.size();
-                }
-
-                @Override
-                public boolean areItemsTheSame(int oldItemPosition, int newItemPosition) {
-                    return compare.isSimilar(getCollection().get(oldItemPosition), list.get(newItemPosition));
-                }
-
-                @Override
-                public boolean areContentsTheSame(int oldItemPosition, int newItemPosition) {
-                    return compare.isEquals(getCollection().get(oldItemPosition), list.get(newItemPosition));
-                }
-            });
-            diffResult.dispatchUpdatesTo(this);
+            DiffUtil.calculateDiff(callback).dispatchUpdatesTo(this);
             collection = list;
         }
-    }
-
-    /**
-     * A Predicate can determine a true or false value for any input of its
-     * parameterized type. For example, a {@code RegexPredicate} might implement
-     * {@code Predicate<String>}, and return true for any String that matches its
-     * given regular expression.
-     * <p>Note: This documentation is sourced from com.android.internal package introduced in API 24</p>
-     * <p>
-     * <p>{@code DiffPredicate<T>} is pretty much something similar in the same vein but provide
-     * interface specific to RecyclerView adapters.</p>
-     */
-    public interface DiffPredicate<T> {
-
-
-        /**
-         * {@link DiffUtil} will use this to decide whether item are the same (id, name, color, etc.)
-         * <p>You can refer to <a href="https://github.com/googlesamples/android-architecture-components/blob/master/BasicSample/app/src/main/java/com/example/android/persistence/ui/ProductAdapter.java#L61-L63">this official Android github example</a></p>
-         *
-         * @param oldObject Old object passed from original list
-         * @param newObject 'Updated' object passed from a new list
-         * @return true if similar.
-         */
-        boolean isSimilar(T oldObject, T newObject);
-
-        /**
-         * {@link DiffUtil} use this to decide whether item are the equals
-         * (make sure to use a variant of Object.equals() in implementation of this method)
-         * <p>
-         * <p>You can refer to <a href="https://github.com/googlesamples/android-architecture-components/blob/master/BasicSample/app/src/main/java/com/example/android/persistence/ui/ProductAdapter.java#L67-L73">this official Android github example</a></p>
-         *
-         * @param oldObject Old object passed from original list
-         * @param newObject 'Updated' object passed from a new list
-         * @return true if equals.
-         */
-        boolean isEquals(T oldObject, T newObject);
-    }
-
-    public interface CompatPredicate<T> {
-
-        /**
-         * Analogous to Java 8 and RxJava Predicate class
-         * Used in {@link #getItem(CompatPredicate)} where this should return true
-         * if the object matches by id, name, or Object.equals() and etc. in its implementation.
-         * <p>
-         * If {@link #getItem(CompatPredicate)} is not used, no need to implement this.
-         */
-        boolean apply(T t);
-
     }
 
 }
