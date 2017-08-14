@@ -1,5 +1,7 @@
 package com.baseconfig.pillar.utils;
 
+import android.support.annotation.NonNull;
+
 import java.net.URL;
 import java.util.regex.Pattern;
 
@@ -7,13 +9,11 @@ public class StringUtils {
 
     private static final Pattern pUpper = Pattern.compile("(?=\\p{Upper})");
 
-    public static String toJsonStylePropertyName(final String str) {
-        if (str == null) return null;
+    public static String toJsonStylePropertyName(@NonNull final String str) {
         return parsePropertyName(str);
     }
 
     private static String parsePropertyName(final String str) {
-
         final int len = str.length();
         if (len <= 2) return str;
         final String[] split = pUpper.split(str);
@@ -39,9 +39,7 @@ public class StringUtils {
      * See <a href="http://stackoverflow.com/a/26810644">StackOverflow Answer</a>
      */
     public static String getFileNameFromUrl(URL url) {
-
         String urlString = url.getFile();
-
         return urlString.substring(urlString.lastIndexOf('/') + 1).split("\\?")[0].split("#")[0];
     }
 }
