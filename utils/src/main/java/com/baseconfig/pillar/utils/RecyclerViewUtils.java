@@ -17,7 +17,7 @@ public class RecyclerViewUtils {
             this.pixelMargin = pixelMargin;
         }
 
-        public VerticalItemDecoration(Context context, int dpMargin) {
+        public VerticalItemDecoration(Context context, float dpMargin) {
             this.pixelMargin = ContextUtils.getPixels(context, dpMargin);
         }
 
