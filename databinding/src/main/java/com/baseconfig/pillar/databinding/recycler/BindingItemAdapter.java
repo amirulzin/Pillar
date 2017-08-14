@@ -101,7 +101,7 @@ public abstract class BindingItemAdapter<T> extends RecyclerView.Adapter<Binding
         return collection;
     }
 
-    protected void setCollection(List<T> list) {
+    public void setCollection(List<T> list) {
         this.collection = list;
     }
 
