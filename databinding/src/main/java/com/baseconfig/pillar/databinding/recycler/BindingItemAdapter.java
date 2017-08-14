@@ -96,10 +96,14 @@ import java.util.ListIterator;
 
 public abstract class BindingItemAdapter<T> extends RecyclerView.Adapter<BindingHolder<? extends ViewDataBinding>> {
 
-    private List<T> collection;
+    protected List<T> collection;
 
     public List<T> getCollection() {
         return collection;
+    }
+
+    protected void setCollection(List<T> list) {
+        this.collection = list;
     }
 
     @Override
@@ -183,7 +187,7 @@ public abstract class BindingItemAdapter<T> extends RecyclerView.Adapter<Binding
             collection = list;
             notifyItemRangeInserted(0, collection.size());
         } else {
-            DiffUtil.calculateDiff(new DiffUtil.Callback() {
+            DiffUtil.DiffResult diffResult = DiffUtil.calculateDiff(new DiffUtil.Callback() {
                 @Override
                 public int getOldListSize() {
                     return getCollection().size();
@@ -203,7 +207,9 @@ public abstract class BindingItemAdapter<T> extends RecyclerView.Adapter<Binding
                 public boolean areContentsTheSame(int oldItemPosition, int newItemPosition) {
                     return compare.isEquals(getCollection().get(oldItemPosition), list.get(newItemPosition));
                 }
-            }).dispatchUpdatesTo(this);
+            });
+            diffResult.dispatchUpdatesTo(this);
+            collection = list;
         }
     }
 
