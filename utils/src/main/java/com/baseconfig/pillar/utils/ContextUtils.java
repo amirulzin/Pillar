@@ -10,7 +10,7 @@ public class ContextUtils {
     /**
      * Get pixels from the given dp (rounded via {@link Math#round})
      */
-    public static int getPixels(final Context context, int dp) {
+    public static int getPixels(final Context context, float dp) {
         return Math.round(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, context.getResources()
                 .getDisplayMetrics()));
     }
