@@ -43,4 +43,5 @@ afterEvaluate {
     apply from: '../install.gradle'
     apply from: '../bintray.gradle'
     bintrayUpload.dependsOn install
+    generateReleaseBuildConfig.enabled = false
 }

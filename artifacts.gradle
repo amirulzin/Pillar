@@ -1,12 +1,12 @@
 android.libraryVariants.all { variant ->
-    if (variant.buildType == 'debug') return;
+    if (variant.buildType == 'debug') return
 
     task("${variant.name}Javadoc", type: Javadoc, dependsOn: "assemble${variant.name.capitalize()}") {
 
         source = variant.javaCompile.source
         title = "${project.name} API"
-        options.links("http://docs.oracle.com/javase/7/docs/api/");
-        options.linksOffline("http://d.android.com/reference", "${android.sdkDirectory}/docs/reference");
+        options.links("http://docs.oracle.com/javase/7/docs/api/")
+        options.linksOffline("http://d.android.com/reference", "${android.sdkDirectory}/docs/reference")
 
         // First add all of your dependencies to the classpath, then add the android jars
         classpath += files(variant.javaCompile.classpath.files)
@@ -14,8 +14,9 @@ android.libraryVariants.all { variant ->
 
         // We're excluding these generated files
         exclude '**/BuildConfig.java'
+        exclude '**/BuildConfig.class'
         exclude '**/R.java'
-
+        exclude '**/R.class'
         failOnError = false
     }
 
@@ -26,7 +27,7 @@ android.libraryVariants.all { variant ->
     }
 
     // Add the Javadoc jar to the project's artifacts. This will allow us to upload it easily later
-    project.artifacts.add("archives", tasks["${variant.name}JavadocJar"]);
+    project.artifacts.add("archives", tasks["${variant.name}JavadocJar"])
 
     task("${variant.name}SourceJar", type: Jar) {
         group = 'publishing'
@@ -34,5 +35,5 @@ android.libraryVariants.all { variant ->
         from android.sourceSets.main.java.srcDirs
     }
 
-    project.artifacts.add("archives", tasks["${variant.name}SourceJar"]);
+    project.artifacts.add("archives", tasks["${variant.name}SourceJar"])
 }
