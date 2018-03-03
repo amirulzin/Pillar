@@ -1,12 +1,14 @@
 # Pillar for Android
 
+[ ![JCenter](https://api.bintray.com/packages/amirulzin/maven/Pillar/images/download.svg) ](https://bintray.com/amirulzin/maven/Pillar/_latestVersion)
+
 This library provides a small but commonly used components in Android development.
 
 The packages can also be mixed and matched.
 
 To get started, add whichever packages below that interest you in your app `build.gradle`:
 ```groovy
-def pillarVersion = '0.3.1'
+def pillarVersion = '0.3.2' //or any current version
 compile "com.baseconfig.pillar:utils:$pillarVersion"
 compile "com.baseconfig.pillar:materials:$pillarVersion"
 compile "com.baseconfig.pillar:databinding:$pillarVersion"
@@ -110,7 +112,7 @@ While pull request are greatly welcomed, please keep in mind the library are mea
     }
     ```
     * Change the library version in `constants.gradle` 
-    * Test implementation in separate module or project with the given gradle dependencies subtituded with your own version
+    * Test implementation in separate module or project with the given gradle dependencies substituted with your own version
 
 **Note**: Javadoc errors are ignored for now.
 
