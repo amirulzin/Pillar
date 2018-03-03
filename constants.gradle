@@ -1,24 +1,24 @@
 ext {
     minSdkVer = 11
-    targetSdkVer = 25
-    compileSdkVer = 25
-    buildToolsVer = '25.0.3'
-    supLibVersion = '25.3.1'
+    targetSdkVer = 27
+    compileSdkVer = 27
+    buildToolsVer = '27.0.3'
+    supLibVersion = '27.1.0'
 
-    libraryVersion = "0.3.1"
+    libraryVersion = "0.3.2"
     libraryVersionCode = 1
 
     bintrayRepo = 'maven'
     publishedGroupId = 'com.baseconfig.pillar'
 
-    //Default to be overriden
+    //Default to be overridden
     libraryManifestPlaceholders = [libName: libraryName]
     bintrayBaseName = 'Pillar'
 
-    //Below need to be overriden by modules.
+    //Below need to be overridden by modules.
     //libraryName = 'Pillar'
     //libraryArtifactName = 'pillar' //will be used for publishing
-    libraryArtifactPackaging = 'aar' //if not overriden, will default to 'aar'
+    libraryArtifactPackaging = 'aar' //if not overridden, will default to 'aar'
 
     yearBegan = '2015'
     libraryDescription = 'Modular UI library implementing Material Design for Android'
